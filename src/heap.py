@@ -146,4 +146,16 @@ class Heap2(HeapMixin):
     def _fix_down(cls, x: list[Ord], i: int) -> None:
         """Move the value at x[i] down to its correct location."""
         # FIXME: implement this strategy
-        ...
+        child = _min_child(x, i)
+        while i < len(x):
+            child = _min_child(x, i)
+            if child is None:
+                break
+            x[i], x[child] = x[child], x[i]
+            i = child
+        while i > 0:
+            p = _parent(i)
+            if not x[i] < x[p]:
+                break  # we don't have to move up
+            x[i], x[p] = x[p], x[i]
+            i = p
